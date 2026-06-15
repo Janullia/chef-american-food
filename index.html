@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chef American Food</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Ultra&family=Nunito:wght@400;700&display=swap" rel="stylesheet"/>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="site-wrapper">
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#" onclick="showPage('home')">Home</a></li>
+        <li><a href="#" onclick="showPage('home')">Burguers</a></li>
+      </ul>
+      <ul class="nav-links">
+        <li><a href="#" class="nav-delivery" onclick="showPage('delivery')">Delivery</a></li>
+        <li><a href="#" id="nav-status-link" style="display:none; color: var(--azul);" onclick="showPage('status')">Acompanhar Pedido</a></li>
+      </ul>
+    </nav>
+
+    <div class="barra-vermelha"></div>
+
+    <div id="page-home" class="page active">
+      <section class="hero">
+        <div class="hero-content">
+          <div class="logo-area">
+            <img src="fotos/logo1.png" alt="Logo" class="logo-img">
+          </div>
+          
+          <div class="hero-tagline">
+            <h1>Bora<br>comer?</h1>
+          </div>
+
+          <div class="burger-area">
+            <img src="fotos/sanduba0.png" alt="Burger" class="hero-burger-img">
+          </div>
+        </div>
+      </section>
+
+      <div class="cards-section">
+        <div class="cards-grid">
+          
+          <div class="card" onclick="openProductDetail(this, 'Pão feito artesanalmente com fermentação natural, blend de carne, queijo, maionese caseira e salada.')">
+            <h2>Burgão</h2>
+            <img src="fotos/sanduba1.png" alt="Burgão" class="product-photo">
+            <span class="ver-mais">Ver Ingredientes</span>
+          </div>
+
+          <div class="card" onclick="openProductDetail(this, 'Pão feito artesanalmente com fermentação natural, blend de frango empanado na farinha panko, bacon, alface e picles, maionese caseira.')">
+            <h2>Frangão</h2>
+            <img src="fotos/sanduba2.png" alt="Frangão" class="product-photo">
+            <span class="ver-mais">Ver Ingredientes</span>
+          </div>
+
+          <div class="card" onclick="openProductDetail(this, 'Pão feito artesanalmente com fermentação natural, smash de carne suína, salada de repolho e molho de mostarda com mel.')">
+            <h2>Porcão</h2>
+            <img src="fotos/sanduba3.png" alt="Porcão" class="product-photo">
+            <span class="ver-mais">Ver Ingredientes</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="page-delivery" class="page">
+      <section class="internal-section">
+        <h2 class="section-title">Finalizar Delivery</h2>
+        <form class="delivery-form" onsubmit="event.preventDefault(); iniciarAcompanhamento();">
+          <div class="form-group">
+            <label for="nome">Nome Completo</label>
+            <input type="text" id="nome" required placeholder="Digite seu nome">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cep">CEP</label>
+              <input type="text" id="cep" required placeholder="00000-000">
+            </div>
+            <div class="form-group">
+              <label for="celular">Celular</label>
+              <input type="tel" id="celular" required placeholder="(00) 00000-0000">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="endereco">Endereço Completo e Número</label>
+            <input type="text" id="endereco" required placeholder="Rua, Número, Bairro e Complemento">
+          </div>
+
+          <div class="form-group">
+            <label for="pagamento">Forma de Pagamento</label>
+            <select id="pagamento" required onchange="mudarAvisoPagamento()">
+              <option value="" disabled selected>Selecione como quer pagar</option>
+              <option value="Pix">Pix (Envio do comprovante no WhatsApp)</option>
+              <option value="Cartão de Crédito">Cartão de Crédito (Levar Maquininha)</option>
+              <option value="Cartão de Débito">Cartão de Débito (Levar Maquininha)</option>
+              <option value="Dinheiro">Pagamento na Entrega (Dinheiro)</option>
+            </select>
+          </div>
+
+          <p id="aviso-pagamento" class="aviso-pagamento-texto"></p>
+
+          <button type="submit" class="btn-submit">Enviar Pedido</button>
+          <button type="button" class="btn-back" onclick="showPage('home')">Voltar ao Menu</button>
+        </form>
+      </section>
+    </div>
+
+    <div id="page-product" class="page">
+      <section class="internal-section product-detail-container">
+        <div class="product-detail-layout">
+          <div class="product-detail-img-box">
+            <img id="detail-img" src="" alt="Foto do Produto">
+          </div>
+          <div class="product-detail-info">
+            <h2 id="detail-title" class="product-title-hd">Nome do Sanduíche</h2>
+            <p id="detail-description" class="product-description-txt">Descrição...</p>
+            <button class="btn-submit" onclick="showPage('delivery')">Pedir Esse Agora</button>
+            <button class="btn-back" onclick="showPage('home')">Voltar ao Menu</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="page-status" class="page">
+      <section class="internal-section">
+        <h2 class="section-title">Acompanhe seu Pedido</h2>
+        <div class="status-container">
+          <p class="status-intro">Olá, <strong id="status-cliente-nome">Cliente</strong>! Seu pedido está sendo processado em nossa cozinha.</p>
+          
+          <div class="timeline">
+            <div class="timeline-step active" id="step-1">
+              <div class="step-icon">📝</div>
+              <h3>Pedido Recebido</h3>
+              <p>Já está no nosso sistema</p>
+            </div>
+            <div class="timeline-step" id="step-2">
+              <div class="step-icon">🔥</div>
+              <h3>Na Chapa</h3>
+              <p>Preparando seu blend perfeito</p>
+            </div>
+            <div class="timeline-step" id="step-3">
+              <div class="step-icon">🛵</div>
+              <h3>Saiu para Entrega</h3>
+              <p>O motoboy voando até você</p>
+            </div>
+            <div class="timeline-step" id="step-4">
+              <div class="step-icon">🍔</div>
+              <h3>Entregue</h3>
+              <p>Hora de se deliciar!</p>
+            </div>
+          </div>
+
+          <div class="status-resumo">
+            <p><strong>Previsão de Entrega:</strong> 35 a 50 min</p>
+            <p><strong>Endereço informado:</strong> <span id="status-endereco-texto">...</span></p>
+          </div>
+
+          <button class="btn-back" onclick="showPage('home')">Voltar para a Página Inicial</button>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <img src="fotos/logo2.png" alt="Logo" class="footer-logo-img">
+      <p class="footer-text">CHEF AMERICAN FOOD</p>
+    </footer>
+  </div>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      document.getElementById('page-' + pageId).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function openProductDetail(cardElement, descriptionText) {
+      const productName = cardElement.querySelector('h2').innerText;
+      const productImageSrc = cardElement.querySelector('.product-photo').src; 
+
+      document.getElementById('detail-title').innerText = productName;
+      document.getElementById('detail-description').innerText = descriptionText;
+      
+      const detailImg = document.getElementById('detail-img');
+      detailImg.src = productImageSrc;
+      detailImg.alt = productName;
+
+      showPage('product');
+    }
+
+    function mudarAvisoPagamento() {
+      const select = document.getElementById('pagamento');
+      const aviso = document.getElementById('aviso-pagamento');
+      
+      if (select.value === 'Pix') {
+        aviso.innerText = "⚡ Prontinho! O código Pix será gerado após o envio.";
+      } else if (select.value.includes('Cartão')) {
+        aviso.innerText = "💳 O entregador levará a maquininha até você.";
+      } else if (select.value === 'Dinheiro') {
+        aviso.innerText = "💵 Pagamento em dinheiro direto para o motoboy.";
+      } else {
+        aviso.innerText = "";
+      }
+    }
+
+    // Função que recolhe os dados e gerencia as etapas simuladas da entrega
+    function iniciarAcompanhamento() {
+      const nome = document.getElementById('nome').value;
+      const endereco = document.getElementById('endereco').value;
+
+      // Atualiza os textos dinâmicos na tela de status
+      document.getElementById('status-cliente-nome').innerText = nome;
+      document.getElementById('status-endereco-texto').innerText = endereco;
+
+      // Exibe o link oculto na barra de navegação principal
+      document.getElementById('nav-status-link').style.display = 'inline-block';
+
+      // Reseta todas as etapas visuais da timeline para o estágio 1
+      document.querySelectorAll('.timeline-step').forEach((step, idx) => {
+        if (idx === 0) step.classList.add('active');
+        else step.classList.remove('active');
+      });
+
+      // Redireciona o usuário para a página de rastreamento
+      showPage('status');
+
+      // SIMULAÇÃO DINÂMICA DE ETAPAS (Avança o status de mentirinha para testes)
+      setTimeout(() => { document.getElementById('step-2').classList.add('active'); }, 5000); // 5 segundos vira 'Na Chapa'
+      setTimeout(() => { document.getElementById('step-3').classList.add('active'); }, 10000); // 10 segundos vira 'Saiu para Entrega'
+      setTimeout(() => { document.getElementById('step-4').classList.add('active'); }, 15000); // 15 segundos vira 'Entregue'
+    }
+  </script>
+</body>
+</html>
